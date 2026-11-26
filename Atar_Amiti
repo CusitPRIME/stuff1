@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beit-Seffer-Amiti | Learning Together</title>
+<style>
+  :root{
+    --navy:#14325c; --navy2:#1d4580; --gold:#f2b632; --cream:#fbf7ee; --ink:#1f2933; --muted:#5b6876;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.55}
+  a{color:inherit}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.2}
+  .wrap{max-width:1150px;margin:0 auto;padding:0 20px}
+
+  /* Top bar */
+  .topbar{background:#0d2442;color:#cfd8e3;font-size:.85rem}
+  .topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:7px;padding-bottom:7px}
+  .topbar a{color:#cfd8e3;text-decoration:none;margin-left:16px}
+  .topbar a:hover{color:var(--gold)}
+
+  /* Header */
+  header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+  .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+  .logo strong{display:block;font-family:Georgia,serif;font-size:1.35rem;letter-spacing:.5px}
+  .logo span{font-size:.78rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase}
+  nav{display:flex;flex-wrap:wrap;gap:4px}
+  nav a{text-decoration:none;padding:8px 12px;border-radius:6px;font-weight:600;font-size:.95rem}
+  nav a:hover{background:var(--navy2);color:var(--gold)}
+  .btn{display:inline-block;border:none;cursor:pointer;font:inherit;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:8px;transition:transform .15s, box-shadow .15s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.18)}
+  .btn-gold{background:var(--gold);color:#1a1a1a}
+  .btn-outline{background:transparent;color:#fff;border:2px solid #fff}
+  .btn-navy{background:var(--navy);color:#fff}
+
+  /* Hero */
+  .hero{background:linear-gradient(120deg,rgba(20,50,92,.94),rgba(29,69,128,.82)),
+        repeating-linear-gradient(45deg,#1d4580 0 22px,#14325c 22px 44px);color:#fff;padding:90px 0 100px}
+  .hero .wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.6rem);margin:0 0 16px}
+  .hero p{font-size:1.15rem;color:#dbe4ef;max-width:560px}
+  .hero .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+  .hero-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:26px}
+  .hero-card h3{margin-top:0;color:var(--gold)}
+  .hero-card ul{padding-left:18px;margin:0}
+  .hero-card li{margin:6px 0}
+  .hero-card a{color:#fff}
+
+  /* Quick links */
+  .quick{margin-top:-45px;position:relative}
+  .quick .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+  .quick a{background:#fff;border-radius:12px;padding:20px 10px;text-align:center;text-decoration:none;font-weight:700;color:var(--navy);box-shadow:0 6px 20px rgba(20,50,92,.12);transition:transform .15s}
+  .quick a:hover{transform:translateY(-4px)}
+  .quick .ico{display:block;font-size:1.9rem;margin-bottom:6px}
+
+  section{padding:70px 0}
+  .section-title{text-align:center;margin-bottom:40px}
+  .section-title h2{font-size:2.1rem;margin:0 0 8px;color:var(--navy)}
+  .section-title p{color:var(--muted);margin:0}
+
+  /* News */
+  .news{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.07);display:flex;flex-direction:column}
+  .card .img{height:160px;display:flex;align-items:center;justify-content:center;font-size:4rem}
+  .card .body{padding:20px;display:flex;flex-direction:column;flex:1}
+  .card .date{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .card h3{margin:6px 0 10px;font-size:1.25rem}
+  .card h3 a{text-decoration:none;color:var(--navy)}
+  .card h3 a:hover{text-decoration:underline}
+  .card p{color:var(--muted);flex:1;margin:0 0 14px}
+  .more{color:var(--navy2);font-weight:700;text-decoration:none}
+  .more:hover{text-decoration:underline}
+
+  /* Principal + events */
+  .split{display:grid;grid-template-columns:1.2fr 1fr;gap:40px}
+  .principal{background:#fff;border-radius:16px;padding:32px;box-shadow:0 4px 18px rgba(0,0,0,.07);display:flex;gap:24px}
+  .avatar{flex:0 0 110px;height:110px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#e08e0b);display:flex;align-items:center;justify-content:center;font-size:3rem}
+  .principal h2{margin-top:0;color:var(--navy)}
+  .principal p{color:var(--muted)}
+  .events{background:var(--navy);color:#fff;border-radius:16px;padding:30px}
+  .events h2{margin-top:0}
+  .event{display:flex;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.15)}
+  .event:last-of-type{border-bottom:none}
+  .event .d{background:var(--gold);color:#1a1a1a;border-radius:10px;min-width:58px;text-align:center;padding:6px 0;font-weight:800;line-height:1.1}
+  .event .d small{display:block;font-size:.7rem;font-weight:700}
+  .event a{text-decoration:none;font-weight:600}
+  .event a:hover{color:var(--gold)}
+
+  /* Stats */
+  .stats{background:linear-gradient(90deg,var(--gold),#f7cd6b)}
+  .stats .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+  .stats strong{display:block;font-size:2.6rem;font-family:Georgia,serif;color:var(--navy)}
+
+  /* Newsletter */
+  .newsletter{background:#fff;border-radius:16px;padding:36px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.07)}
+  .newsletter form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+  .newsletter input{padding:12px 16px;border:2px solid #d5dbe3;border-radius:8px;font:inherit;min-width:280px}
+
+  /* Footer */
+  footer{background:#0d2442;color:#b9c5d4;padding:56px 0 24px;font-size:.95rem}
+  footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px}
+  footer h4{color:#fff;margin-top:0}
+  footer ul{list-style:none;padding:0;margin:0}
+  footer li{margin:7px 0}
+  footer a{text-decoration:none}
+  footer a:hover{color:var(--gold)}
+  .social{display:flex;gap:10px;margin-top:14px}
+  .social a{width:40px;height:40px;border-radius:50%;background:#1d3a63;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}
+  .social a:hover{background:var(--gold);color:#1a1a1a}
+  .copy{border-top:1px solid #1f3b61;margin-top:36px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.85rem}
+
+  .search{display:flex;gap:6px}
+  .search input{padding:4px 10px;border-radius:6px;border:none;font:inherit;width:140px}
+  .search button{padding:4px 10px;border-radius:6px;border:none;background:var(--gold);font-weight:700;cursor:pointer}
+
+  @media (max-width:900px){
+    .hero .wrap,.split{grid-template-columns:1fr}
+    .quick .grid{grid-template-columns:repeat(3,1fr)}
+    .news{grid-template-columns:1fr}
+    .stats .grid{grid-template-columns:repeat(2,1fr)}
+    footer .cols{grid-template-columns:1fr 1fr}
+    .principal{flex-direction:column}
+  }
+
+  /* ---------- TROLL PAGE ---------- */
+  #troll{display:none;min-height:100vh;text-align:center;padding:30px 16px 50px;
+         background:radial-gradient(circle at 50% 30%,#fff59d,#ffca28 45%,#ff7043 100%)}
+  body.trolled #home{display:none}
+  body.trolled #troll{display:block}
+  #troll h1{font-family:Impact,"Arial Black",sans-serif;font-size:clamp(2.6rem,10vw,7.5rem);margin:10px 0 20px;
+            color:#fff;text-transform:uppercase;letter-spacing:2px;line-height:1;
+            -webkit-text-stroke:3px #1a1a1a;text-shadow:6px 6px 0 #1a1a1a;animation:wobble 1.2s ease-in-out infinite}
+  @keyframes wobble{0%,100%{transform:rotate(-3deg) scale(1)}50%{transform:rotate(3deg) scale(1.06)}}
+  #trollArt{width:min(92vw,520px);margin:0 auto;border:8px solid #1a1a1a;border-radius:22px;overflow:hidden;
+            box-shadow:12px 12px 0 #1a1a1a;background:#fff;line-height:0}
+  #trollArt svg{width:100%;height:auto;display:block}
+  #trollInfo{margin-top:22px;font-weight:800;font-size:1.1rem;color:#1a1a1a}
+  #backBtn{margin-top:14px;background:#1a1a1a;color:#fff;border:none;padding:12px 22px;border-radius:999px;font:inherit;font-weight:700;cursor:pointer}
+  #backBtn:hover{background:#333}
+
+  /* troll animation parts */
+  .troll-svg .troll,.troll-svg .arm-l,.troll-svg .arm-r,.troll-svg .leg-l,.troll-svg .leg-r,.troll-svg .head,
+  .troll-svg .beams,.troll-svg .note{transform-box:view-box}
+  .troll-svg .troll{transform-origin:200px 420px}
+
+  /* Dance 0: bounce & wave */
+  .dance0 .troll{animation:t-bob .45s ease-in-out infinite alternate}
+  .dance0 .arm-l{animation:t-armL .45s ease-in-out infinite alternate}
+  .dance0 .arm-r{animation:t-armR .45s ease-in-out infinite alternate-reverse}
+  .dance0 .leg-l{animation:t-kick .45s ease-in-out infinite alternate}
+  .dance0 .leg-r{animation:t-kick .45s ease-in-out infinite alternate-reverse}
+  .dance0 .head{animation:t-head .45s ease-in-out infinite alternate}
+
+  /* Dance 1: spin hop */
+  .dance1 .troll{animation:t-spin 1.3s ease-in-out infinite}
+  .dance1 .arm-l{animation:t-upL .32s ease-in-out infinite alternate}
+  .dance1 .arm-r{animation:t-upR .32s ease-in-out infinite alternate}
+  .dance1 .leg-l{animation:t-kick .32s ease-in-out infinite alternate}
+  .dance1 .leg-r{animation:t-kick .32s ease-in-out infinite alternate-reverse}
+
+  /* Dance 2: shimmy */
+  .dance2 .troll{animation:t-shimmy .3s ease-in-out infinite alternate}
+  .dance2 .arm-l{animation:t-pumpL .3s ease-in-out infinite alternate}
+  .dance2 .arm-r{animation:t-pumpR .3s ease-in-out infinite alternate}
+  .dance2 .leg-l{animation:t-kick .3s ease-in-out infinite alternate-reverse}
+  .dance2 .leg-r{animation:t-kick .3s ease-in-out infinite alternate}
+  .dance2 .head{animation:t-head .3s ease-in-out infinite alternate-reverse}
+
+  .troll-svg .beams{transform-origin:200px 0px;animation:t-beams 2s ease-in-out infinite alternate}
+  .troll-svg .note{animation:t-note 2.4s linear infinite}
+  .troll-svg .note.n2{animation-delay:.8s}
+  .troll-svg .note.n3{animation-delay:1.6s}
+  .troll-svg .ball{transform-box:fill-box;transform-origin:center;animation:t-ball 1s linear infinite}
+
+  @keyframes t-bob{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-24px) rotate(5deg)}}
+  @keyframes t-armL{from{transform:rotate(0deg)}to{transform:rotate(115deg)}}
+  @keyframes t-armR{from{transform:rotate(0deg)}to{transform:rotate(-115deg)}}
+  @keyframes t-kick{from{transform:rotate(-13deg)}to{transform:rotate(13deg)}}
+  @keyframes t-head{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+  @keyframes t-spin{0%{transform:scaleX(1) translateY(0)}25%{transform:scaleX(.25) translateY(-45px)}
+                    50%{transform:scaleX(-1) translateY(0)}75%{transform:scaleX(-.25) translateY(-45px)}100%{transform:scaleX(1) translateY(0)}}
+  @keyframes t-upL{from{transform:rotate(95deg)}to{transform:rotate(145deg)}}
+  @keyframes t-upR{from{transform:rotate(-95deg)}to{transform:rotate(-145deg)}}
+  @keyframes t-shimmy{from{transform:translateX(-26px) skewX(6deg)}to{transform:translateX(26px) skewX(-6deg)}}
+  @keyframes t-pumpL{from{transform:rotate(20deg)}to{transform:rotate(75deg)}}
+  @keyframes t-pumpR{from{transform:rotate(-75deg)}to{transform:rotate(-20deg)}}
+  @keyframes t-beams{from{transform:rotate(-14deg);opacity:.6}to{transform:rotate(14deg);opacity:1}}
+  @keyframes t-note{0%{transform:translateY(40px);opacity:0}20%{opacity:1}100%{transform:translateY(-120px);opacity:0}}
+  @keyframes t-ball{0%{opacity:1}50%{opacity:.75}100%{opacity:1}}
+</style>
+</head>
+<body>
+
+<!-- =================== HOME PAGE =================== -->
+<div id="home">
+  <div class="topbar">
+    <div class="wrap">
+      <div>📞 00-000-0000 &nbsp;·&nbsp; ✉️ office@beit-seffer-amiti.example</div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <form class="search" onsubmit="return false"><input type="text" placeholder="Search..." aria-label="Search"><button type="submit">🔍</button></form>
+        <a href="#">Parent Portal</a>
+        <a href="#">Student Login</a>
+        <a href="#">Staff Area</a>
+        <a href="#">עברית</a>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="wrap">
+      <a href="#" class="logo">
+        <svg width="52" height="58" viewBox="0 0 52 58" aria-hidden="true">
+          <path d="M26 2 L50 10 V28 C50 44 38 52 26 56 C14 52 2 44 2 28 V10 Z" fill="#f2b632" stroke="#fff" stroke-width="2"/>
+          <path d="M12 22 Q19 18 26 22 Q33 18 40 22 V40 Q33 36 26 40 Q19 36 12 40 Z" fill="#14325c"/>
+          <line x1="26" y1="22" x2="26" y2="40" stroke="#f2b632" stroke-width="1.5"/>
+          <polygon points="26,7 28,12 33,12 29,15 31,20 26,17 21,20 23,15 19,12 24,12" fill="#14325c"/>
+        </svg>
+        <div><strong>Beit-Seffer-Amiti</strong><span>Learning Together</span></div>
+      </a>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Admissions</a>
+        <a href="#">Academics</a>
+        <a href="#">Student Life</a>
+        <a href="#">Staff</a>
+        <a href="#">Calendar</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Welcome to Beit-Seffer-Amiti</h1>
+        <p>A warm, curious and ambitious school community where every student is known, challenged and celebrated. Grades 1–12, science labs, arts, sports and so much more.</p>
+        <div class="actions">
+          <a href="#" class="btn btn-gold">Apply for 2027</a>
+          <a href="#" class="btn btn-outline">Take a Virtual Tour</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>📣 Announcements</h3>
+        <ul>
+          <li><a href="#">Report cards are now available online</a></li>
+          <li><a href="#">New bus routes start next week</a></li>
+          <li><a href="#">Winter break schedule published</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick">
+    <div class="wrap">
+      <div class="grid">
+        <a href="#"><span class="ico">🗓️</span>Timetable</a>
+        <a href="#"><span class="ico">🍎</span>Lunch Menu</a>
+        <a href="#"><span class="ico">📚</span>Library</a>
+        <a href="#"><span class="ico">✏️</span>Homework</a>
+        <a href="#"><span class="ico">⚽</span>Sports</a>
+        <a href="#"><span class="ico">🎨</span>Clubs</a>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="section-title">
+        <h2>Latest News</h2>
+        <p>What's happening around campus</p>
+      </div>
+      <div class="news">
+        <article class="card">
+          <div class="img" style="background:#e3f2fd">🔬</div>
+          <div class="body">
+            <span class="date">November 20, 2026</span>
+            <h3><a href="#">Grade 9 wins the regional science fair</a></h3>
+            <p>Our young scientists took first place with their project on solar-powered water filters.</p>
+            <a href="#" class="more">Read more →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="img" style="background:#fff3e0">🎭</div>
+          <div class="body">
+            <span class="date">November 14, 2026</span>
+            <h3><a href="#">Drama club announces winter play</a></h3>
+            <p>Auditions are open to all grades. Rehearsals start right after the holidays.</p>
+            <a href="#" class="more">Read more →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="img" style="background:#e8f5e9">🏀</div>
+          <div class="body">
+            <span class="date">November 8, 2026</span>
+            <h3><a href="#">Basketball team reaches the finals</a></h3>
+            <p>Come cheer on the Amiti Eagles at the championship game this Friday!</p>
+            <a href="#" class="more">Read more →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap split">
+      <div class="principal">
+        <div class="avatar">👩‍🏫</div>
+        <div>
+          <h2>A Message from the Principal</h2>
+          <p>Dear families, it is a privilege to lead a school where kindness and curiosity go hand in hand. This year we are opening a brand-new robotics lab and expanding our music program. My door is always open.</p>
+          <a href="#" class="btn btn-navy">Read the full letter</a>
+        </div>
+      </div>
+      <div class="events">
+        <h2>Upcoming Events</h2>
+        <div class="event"><div class="d">03<small>DEC</small></div><a href="#">Parent–Teacher Conferences</a></div>
+        <div class="event"><div class="d">10<small>DEC</small></div><a href="#">Hanukkah Concert</a></div>
+        <div class="event"><div class="d">17<small>DEC</small></div><a href="#">Science Open Day</a></div>
+        <div class="event"><div class="d">05<small>JAN</small></div><a href="#">Back to School after Break</a></div>
+        <p style="margin-bottom:0"><a href="#" class="more" style="color:var(--gold)">View full calendar →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <section style="padding:50px 0">
+      <div class="wrap grid">
+        <div><strong>950+</strong>Students</div>
+        <div><strong>80</strong>Teachers</div>
+        <div><strong>35</strong>Clubs</div>
+        <div><strong>98%</strong>Graduation Rate</div>
+      </div>
+    </section>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="newsletter">
+        <h2 style="margin:0;color:var(--navy)">Join our Newsletter</h2>
+        <p style="color:var(--muted);margin:8px 0 0">Get school news and events straight to your inbox.</p>
+        <form onsubmit="return false">
+          <input type="email" placeholder="Your email address" aria-label="Email">
+          <button type="submit" class="btn btn-gold">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <h4>Beit-Seffer-Amiti</h4>
+          <p>12 Friendship Street<br>Imaginary City</p>
+          <div class="social">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="Instagram">ig</a>
+            <a href="#" aria-label="YouTube">▶</a>
+            <a href="#" aria-label="X">x</a>
+          </div>
+        </div>
+        <div>
+          <h4>School</h4>
+          <ul>
+            <li><a href="#">Our Mission</a></li>
+            <li><a href="#">History</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Parents</h4>
+          <ul>
+            <li><a href="#">Forms &amp; Documents</a></li>
+            <li><a href="#">School Supplies List</a></li>
+            <li><a href="#">Transportation</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Accessibility</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copy">
+        <span>© 2026 Beit-Seffer-Amiti. All rights reserved.</span>
+        <a href="#">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- =================== TROLL PAGE =================== -->
+<div id="troll">
+  <h1>You just got trolled</h1>
+  <div id="trollArt"></div>
+  <div id="trollInfo"></div>
+  <button id="backBtn" type="button">← Back to Beit-Seffer-Amiti</button>
+</div>
+
+<script>
+/* ---------- Troll generator: every index gives a different troll ---------- */
+const O = '#2d2a26';
+const SKINS  = ['#7cb342','#4db6ac','#9575cd','#90a4ae','#ffb74d','#a1887f','#e57373','#64b5f6','#c0ca33','#f06292','#26a69a'];
+const HAIRS  = ['#ff5722','#ffeb3b','#e91e63','#00bcd4','#ffffff','#8bc34a','#673ab7','#3e2723'];
+const CLOTHS = ['#795548','#5d4037','#455a64','#8d6e63','#6a1b9a','#2e7d32'];
+
+function rng(seed){ let s = seed * 7919 + 17; return () => (s = (s * 9301 + 49297) % 233280) / 233280; }
+
+function tree(x, y, s){
+  return `<rect x="${x-6*s}" y="${y}" width="${12*s}" height="${392-y}" fill="#6d4c41"/>
+          <polygon points="${x},${y-120*s} ${x-46*s},${y+15*s} ${x+46*s},${y+15*s}" fill="#2e7d32"/>
+          <polygon points="${x},${y-150*s} ${x-34*s},${y-50*s} ${x+34*s},${y-50*s}" fill="#388e3c"/>`;
+}
+
+function background(k, id, i){
+  const r = rng(i + 3);
+  switch(k){
+    case 0: // forest
+      return `<defs><linearGradient id="${id}a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b3e5fc"/><stop offset="1" stop-color="#e8f5e9"/></linearGradient></defs>
+        <rect width="400" height="440" fill="url(#${id}a)"/>
+        ${tree(40,290,1)}${tree(110,250,.75)}${tree(330,280,1.05)}${tree(380,240,.7)}
+        <rect y="385" width="400" height="55" fill="#689f38"/>`;
+    case 1: // under a bridge
+      return `<rect width="400" height="440" fill="#455a64"/>
+        <rect y="345" width="400" height="95" fill="#4fc3f7" opacity=".55"/>
+        <path d="M0 0 H400 V360 H362 Q362 110 200 110 Q38 110 38 360 H0 Z" fill="#9e9e9e" stroke="${O}" stroke-width="4"/>
+        <g fill="#7d7d7d"><rect x="8" y="20" width="44" height="18"/><rect x="70" y="40" width="44" height="18"/><rect x="300" y="25" width="44" height="18"/>
+        <rect x="350" y="70" width="40" height="18"/><rect x="5" y="150" width="28" height="18"/><rect x="368" y="200" width="28" height="18"/>
+        <rect x="160" y="30" width="44" height="18"/><rect x="230" y="60" width="44" height="18"/></g>
+        <rect y="0" width="400" height="14" fill="#795548"/>`;
+    case 2: { // cave
+      let st = '';
+      [[0,40,90],[45,90,60],[110,150,110],[240,280,80],[300,345,120],[355,400,70]].forEach(([a,b,h]) => st += `<polygon points="${a},0 ${b},0 ${(a+b)/2},${h}" fill="#4e342e"/>`);
+      return `<rect width="400" height="440" fill="#2b1d18"/>
+        <circle cx="200" cy="250" r="210" fill="#6d4c41" opacity=".45"/>${st}
+        <polygon points="20,400 35,330 52,400" fill="#ba68c8"/><polygon points="45,400 62,350 75,400" fill="#ce93d8"/>
+        <polygon points="340,400 358,320 376,400" fill="#4dd0e1"/><polygon points="365,400 380,355 392,400" fill="#80deea"/>
+        <rect y="392" width="400" height="48" fill="#3e2723"/>`;
+    }
+    case 3: // sunset
+      return `<defs><linearGradient id="${id}a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a65"/><stop offset="1" stop-color="#ffe082"/></linearGradient></defs>
+        <rect width="400" height="440" fill="url(#${id}a)"/>
+        <circle cx="325" cy="105" r="52" fill="#fff59d"/>
+        <path d="M0 350 Q100 290 200 340 T400 330 V440 H0 Z" fill="#a1887f"/>
+        <path d="M0 395 Q120 365 230 392 T400 385 V440 H0 Z" fill="#8d6e63"/>`;
+    case 4: { // night sky
+      let stars = '';
+      for(let n = 0; n < 28; n++) stars += `<circle cx="${(r()*400).toFixed(0)}" cy="${(r()*300).toFixed(0)}" r="${(1+r()*2.2).toFixed(1)}" fill="#fff"/>`;
+      return `<defs><linearGradient id="${id}a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1b4a"/><stop offset="1" stop-color="#3949ab"/></linearGradient></defs>
+        <rect width="400" height="440" fill="url(#${id}a)"/>${stars}
+        <circle cx="335" cy="75" r="32" fill="#fff9c4"/><circle cx="348" cy="66" r="28" fill="#13235a"/>
+        <rect y="388" width="400" height="52" fill="#1a2766"/>`;
+    }
+    case 5: // swamp
+      return `<defs><linearGradient id="${id}a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c5e1a5"/><stop offset="1" stop-color="#689f38"/></linearGradient></defs>
+        <rect width="400" height="440" fill="url(#${id}a)"/>
+        <g stroke="#33691e" stroke-width="5" stroke-linecap="round"><line x1="25" y1="400" x2="20" y2="260"/><line x1="45" y1="400" x2="52" y2="280"/><line x1="370" y1="400" x2="378" y2="250"/><line x1="350" y1="400" x2="345" y2="290"/></g>
+        <g fill="#5d4037"><ellipse cx="20" cy="255" rx="7" ry="20"/><ellipse cx="378" cy="245" rx="7" ry="20"/></g>
+        <ellipse cx="200" cy="420" rx="270" ry="55" fill="#33691e" opacity=".8"/>
+        <ellipse cx="70" cy="415" rx="30" ry="9" fill="#9ccc65"/><ellipse cx="335" cy="425" rx="34" ry="10" fill="#9ccc65"/>
+        <circle cx="120" cy="405" r="5" fill="#dcedc8"/><circle cx="290" cy="410" r="4" fill="#dcedc8"/>`;
+    case 6: // mountains
+      return `<rect width="400" height="440" fill="#e1f5fe"/>
+        <polygon points="-20,340 90,140 200,340" fill="#78909c"/><polygon points="90,140 70,180 92,172 112,182" fill="#fff"/>
+        <polygon points="140,340 270,100 400,340" fill="#607d8b"/><polygon points="270,100 246,145 270,136 294,146" fill="#fff"/>
+        <polygon points="300,340 390,190 480,340" fill="#90a4ae"/>
+        <rect y="372" width="400" height="68" fill="#9ccc65"/>`;
+    default: { // candy land
+      let dots = '';
+      for(let y = 20; y < 440; y += 50) for(let x = (y/50 % 2) * 25 + 15; x < 400; x += 50) dots += `<circle cx="${x}" cy="${y}" r="9" fill="#fff" opacity=".6"/>`;
+      const cols = ['#ef5350','#ffa726','#ffee58','#66bb6a','#42a5f5','#ab47bc'];
+      let rb = '';
+      cols.forEach((c, n) => { const rr = 190 - n*13; rb += `<path d="M${200-rr} 400 A${rr} ${rr} 0 0 1 ${200+rr} 400" stroke="${c}" stroke-width="13" fill="none" opacity=".75"/>`; });
+      return `<rect width="400" height="440" fill="#ffd1ec"/>${dots}${rb}<rect y="395" width="400" height="45" fill="#f48fb1"/>`;
+    }
+  }
+}
+
+function ears(k, skin){
+  if(k === 0) return `<polygon points="114,138 38,92 120,186" fill="${skin}" stroke="${O}" stroke-width="5" stroke-linejoin="round"/>
+                      <polygon points="286,138 362,92 280,186" fill="${skin}" stroke="${O}" stroke-width="5" stroke-linejoin="round"/>`;
+  if(k === 1) return `<circle cx="108" cy="165" r="30" fill="${skin}" stroke="${O}" stroke-width="5"/><circle cx="108" cy="165" r="14" fill="#f8bbd0"/>
+                      <circle cx="292" cy="165" r="30" fill="${skin}" stroke="${O}" stroke-width="5"/><circle cx="292" cy="165" r="14" fill="#f8bbd0"/>`;
+  return `<ellipse cx="102" cy="188" rx="20" ry="44" transform="rotate(28 102 188)" fill="${skin}" stroke="${O}" stroke-width="5"/>
+          <ellipse cx="298" cy="188" rx="20" ry="44" transform="rotate(-28 298 188)" fill="${skin}" stroke="${O}" stroke-width="5"/>`;
+}
+
+function hair(k, c){
+  const s = `fill="${c}" stroke="${O}" stroke-width="4" stroke-linejoin="round"`;
+  switch(k){
+    case 0: return `<polygon points="125,112 135,40 160,95 175,20 195,85 210,14 228,88 250,30 262,98 286,50 280,116" ${s}/>`;
+    case 1: return `<path d="M163 94 C138 40 186 46 200 3 C214 46 262 40 237 94 Z" ${s}/>`;
+    case 2: return `<polygon points="182,86 168,30 188,52 200,6 212,52 232,30 218,86" ${s}/>`;
+    case 3: {
+      let out = '';
+      for(let n = 0; n <= 8; n++){ const a = (-165 + n * 18.75) * Math.PI / 180; out += `<circle cx="${(200 + 92*Math.cos(a)).toFixed(1)}" cy="${(158 + 82*Math.sin(a)).toFixed(1)}" r="22" ${s}/>`; }
+      return out;
+    }
+    case 4: return `<g fill="none" stroke="${c === '#ffffff' ? O : c}" stroke-width="6" stroke-linecap="round">
+                      <path d="M185 80 Q165 45 190 30 Q205 22 196 12"/><path d="M200 77 Q206 40 222 32"/><path d="M214 80 Q240 50 230 28"/></g>`;
+    default: return `<path d="M100 160 L84 120 L110 116 L94 74 L130 86 L130 44 L165 70 L180 28 L200 62 L222 26 L238 68 L272 44 L272 86 L308 74 L290 116 L316 120 L300 160 Q290 98 200 92 Q110 98 100 160 Z" ${s}/>`;
+  }
+}
+
+function eyes(k){
+  const W = `fill="#fff" stroke="${O}" stroke-width="4"`;
+  switch(k){
+    case 0: return `<circle cx="165" cy="145" r="22" ${W}/><circle cx="235" cy="145" r="22" ${W}/>
+                    <circle cx="169" cy="148" r="9" fill="#222"/><circle cx="239" cy="148" r="9" fill="#222"/>
+                    <circle cx="166" cy="144" r="3" fill="#fff"/><circle cx="236" cy="144" r="3" fill="#fff"/>`;
+    case 1: return `<path d="M160 92 Q200 78 240 92" stroke="${O}" stroke-width="8" fill="none" stroke-linecap="round"/>
+                    <circle cx="200" cy="138" r="34" ${W}/><circle cx="203" cy="142" r="16" fill="#43a047"/>
+                    <circle cx="204" cy="143" r="8" fill="#222"/><circle cx="198" cy="135" r="4" fill="#fff"/>`;
+    case 2: return `<circle cx="165" cy="146" r="19" ${W}/><circle cx="235" cy="146" r="19" ${W}/>
+                    <circle cx="165" cy="153" r="8" fill="#222"/><circle cx="235" cy="153" r="8" fill="#222"/>
+                    <path d="M144 146 A21 21 0 0 1 186 146 Z" fill="var(--lid)" stroke="${O}" stroke-width="4"/>
+                    <path d="M214 146 A21 21 0 0 1 256 146 Z" fill="var(--lid)" stroke="${O}" stroke-width="4"/>`;
+    case 3: return `<circle cx="162" cy="140" r="27" ${W}/><circle cx="238" cy="150" r="15" ${W}/>
+                    <circle cx="171" cy="150" r="10" fill="#222"/><circle cx="232" cy="144" r="7" fill="#222"/>`;
+    default: return `<circle cx="165" cy="147" r="18" ${W}/><circle cx="235" cy="147" r="18" ${W}/>
+                     <circle cx="167" cy="149" r="9" fill="#222"/><circle cx="233" cy="149" r="9" fill="#222"/>
+                     <line x1="138" y1="112" x2="186" y2="128" stroke="${O}" stroke-width="9" stroke-linecap="round"/>
+                     <line x1="262" y1="112" x2="214" y2="128" stroke="${O}" stroke-width="9" stroke-linecap="round"/>`;
+  }
+}
+
+function nose(k, skin){
+  switch(k){
+    case 0: return `<circle cx="200" cy="186" r="24" fill="${skin}" stroke="${O}" stroke-width="4"/><circle cx="192" cy="178" r="6" fill="#fff" opacity=".5"/>`;
+    case 1: return `<path d="M192 168 Q262 178 288 206 Q240 206 196 201 Z" fill="${skin}" stroke="${O}" stroke-width="4" stroke-linejoin="round"/>`;
+    case 2: return `<ellipse cx="200" cy="188" rx="31" ry="20" fill="${skin}" stroke="${O}" stroke-width="4"/>
+                    <circle cx="186" cy="184" r="4" fill="${O}" opacity=".25"/><circle cx="212" cy="192" r="5" fill="${O}" opacity=".25"/><circle cx="205" cy="180" r="3" fill="${O}" opacity=".25"/>`;
+    default: return `<ellipse cx="200" cy="188" rx="25" ry="17" fill="#f8bbd0" stroke="${O}" stroke-width="4"/>
+                     <ellipse cx="192" cy="188" rx="4" ry="7" fill="#5d4037"/><ellipse cx="208" cy="188" rx="4" ry="7" fill="#5d4037"/>`;
+  }
+}
+
+function mouth(k){
+  const D = '#4a1c1c';
+  switch(k){
+    case 0: return `<path d="M140 214 Q200 264 260 214 Q200 234 140 214 Z" fill="${D}" stroke="${O}" stroke-width="4" stroke-linejoin="round"/>
+                    <polygon points="150,222 158,197 167,228" fill="#fffde7" stroke="${O}" stroke-width="3" stroke-linejoin="round"/>
+                    <polygon points="250,222 242,197 233,228" fill="#fffde7" stroke="${O}" stroke-width="3" stroke-linejoin="round"/>`;
+    case 1: return `<path d="M150 216 Q200 258 250 216 Z" fill="${D}" stroke="${O}" stroke-width="4" stroke-linejoin="round"/>
+                    <rect x="186" y="216" width="13" height="17" fill="#fff" stroke="${O}" stroke-width="2.5"/>
+                    <rect x="201" y="216" width="13" height="17" fill="#fff" stroke="${O}" stroke-width="2.5"/>`;
+    case 2: return `<ellipse cx="200" cy="225" rx="38" ry="20" fill="${D}" stroke="${O}" stroke-width="4"/><ellipse cx="200" cy="235" rx="20" ry="8" fill="#e57373"/>`;
+    case 3: return `<path d="M205 228 q0 32 18 32 q18 0 18 -32 Z" fill="#ef5350" stroke="${O}" stroke-width="3.5"/>
+                    <line x1="223" y1="232" x2="223" y2="250" stroke="#b71c1c" stroke-width="2.5"/>
+                    <path d="M155 218 Q200 246 248 218" stroke="${O}" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+    default: return `<path d="M160 228 Q208 242 246 210" stroke="${O}" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="252" cy="207" r="3" fill="${O}"/>`;
+  }
+}
+
+function headAccessory(k, eyeK){
+  switch(k){
+    case 1: return `<polygon points="164,90 200,6 236,90" fill="#ff4081" stroke="${O}" stroke-width="4" stroke-linejoin="round"/>
+                    <path d="M180 52 L220 52 M172 72 L228 72" stroke="#ffeb3b" stroke-width="6"/>
+                    <circle cx="200" cy="8" r="10" fill="#ffeb3b" stroke="${O}" stroke-width="3"/>`;
+    case 2: return `<polygon points="148,94 153,44 177,70 200,32 223,70 247,44 252,94" fill="#ffd54f" stroke="${O}" stroke-width="4" stroke-linejoin="round"/>
+                    <circle cx="200" cy="78" r="7" fill="#e53935"/><circle cx="172" cy="84" r="5" fill="#1e88e5"/><circle cx="228" cy="84" r="5" fill="#43a047"/>`;
+    case 3: return eyeK === 1
+      ? `<circle cx="200" cy="138" r="40" fill="none" stroke="#795548" stroke-width="6"/><path d="M238 150 Q260 200 245 240" stroke="#ffd54f" stroke-width="3" fill="none"/>`
+      : `<g fill="rgba(255,255,255,.15)" stroke="#333" stroke-width="5"><circle cx="165" cy="146" r="27"/><circle cx="235" cy="146" r="27"/></g>
+         <path d="M192 144 Q200 136 208 144 M138 140 L112 132 M262 140 L288 132" stroke="#333" stroke-width="5" fill="none"/>`;
+    case 6: return `<rect x="132" y="128" width="60" height="34" rx="10" fill="#111"/><rect x="208" y="128" width="60" height="34" rx="10" fill="#111"/>
+                    <path d="M192 140 L208 140 M132 136 L110 128 M268 136 L290 128" stroke="#111" stroke-width="6"/>
+                    <path d="M142 134 L160 134" stroke="#fff" stroke-width="3" opacity=".7"/><path d="M218 134 L236 134" stroke="#fff" stroke-width="3" opacity=".7"/>`;
+    default: return '';
+  }
+}
+
+function discoOverlay(){
+  return `<g class="beams" opacity=".9">
+      <polygon points="200,0 40,440 120,440" fill="#ff4081" opacity=".22"/>
+      <polygon points="200,0 170,440 240,440" fill="#ffee58" opacity=".22"/>
+      <polygon points="200,0 290,440 370,440" fill="#40c4ff" opacity=".22"/>
+    </g>
+    <line x1="55" y1="0" x2="55" y2="22" stroke="#555" stroke-width="2"/>
+    <g class="ball"><circle cx="55" cy="46" r="24" fill="#cfd8dc" stroke="#555" stroke-width="2"/>
+      <path d="M31 46 H79 M35 34 H75 M35 58 H75 M55 22 V70 M43 25 Q37 46 43 67 M67 25 Q73 46 67 67" stroke="#90a4ae" stroke-width="1.5" fill="none"/>
+      <circle cx="47" cy="38" r="4" fill="#fff"/></g>
+    <g font-family="Arial, sans-serif" font-weight="bold" fill="#fff" stroke="${O}" stroke-width="1.5">
+      <text class="note" x="335" y="170" font-size="34">♪</text>
+      <text class="note n2" x="360" y="210" font-size="28">♫</text>
+      <text class="note n3" x="315" y="230" font-size="30">♪</text>
+    </g>`;
+}
+
+function trollSVG(i){
+  const skin  = SKINS[i % 11];
+  const bgK   = i % 8;                     // (skin, background) pair is unique for the first 88 trolls
+  const hairC = HAIRS[(i * 3 + 1) % 8];
+  const hairK = (i * 5 + 2) % 6;
+  const eyeK  = (i * 2 + Math.floor(i / 5)) % 5;
+  const noseK = (i + Math.floor(i / 4)) % 4;
+  const mouthK= (i * 3 + Math.floor(i / 6)) % 5;
+  const earK  = (i + Math.floor(i / 3)) % 3;
+  const acc   = (i * 4 + 1) % 7;           // 0 none,1 party hat,2 crown,3 glasses,4 bow tie,5 club,6 sunglasses
+  const cloth = CLOTHS[(i * 5) % 6];
+  const dancing = i % 3 === 1;
+  const danceK  = Math.floor(i / 3) % 3;
+  const id = 't' + i;
+
+  const limb = (d) => `<path d="${d}" stroke="${O}" stroke-width="34" stroke-linecap="round" fill="none"/><path d="${d}" stroke="${skin}" stroke-width="25" stroke-linecap="round" fill="none"/>`;
+
+  const club = acc === 5 ? `<path d="M334 350 L372 252" stroke="#6d4c41" stroke-width="14" stroke-linecap="round"/>
+      <ellipse cx="378" cy="236" rx="22" ry="34" transform="rotate(22 378 236)" fill="#8d6e63" stroke="${O}" stroke-width="4"/>
+      <circle cx="372" cy="228" r="4" fill="#5d4037"/><circle cx="385" cy="245" r="3" fill="#5d4037"/>` : '';
+
+  return `<svg class="troll-svg ${dancing ? 'dance' + danceK : ''}" viewBox="0 0 400 440" xmlns="http://www.w3.org/2000/svg" style="--lid:${skin}" role="img" aria-label="A cartoon troll">
+    ${background(bgK, id, i)}
+    ${dancing ? discoOverlay() : ''}
+    <ellipse cx="200" cy="422" rx="112" ry="13" fill="#000" opacity=".22"/>
+    <g class="troll">
+      <g class="leg-l" style="transform-origin:170px 352px">
+        <rect x="150" y="345" width="38" height="60" rx="14" fill="${skin}" stroke="${O}" stroke-width="4"/>
+        <ellipse cx="160" cy="408" rx="32" ry="15" fill="${skin}" stroke="${O}" stroke-width="4"/>
+      </g>
+      <g class="leg-r" style="transform-origin:230px 352px">
+        <rect x="212" y="345" width="38" height="60" rx="14" fill="${skin}" stroke="${O}" stroke-width="4"/>
+        <ellipse cx="240" cy="408" rx="32" ry="15" fill="${skin}" stroke="${O}" stroke-width="4"/>
+      </g>
+      <ellipse cx="200" cy="305" rx="88" ry="80" fill="${skin}" stroke="${O}" stroke-width="5"/>
+      <ellipse cx="200" cy="300" rx="55" ry="48" fill="#fff" opacity=".22"/>
+      <circle cx="200" cy="312" r="4" fill="${O}" opacity=".5"/>
+      <path d="M116 330 Q200 360 284 330 L280 360 L262 350 L248 372 L230 355 L212 378 L195 356 L178 376 L162 352 L146 370 L132 350 L120 360 Z" fill="${cloth}" stroke="${O}" stroke-width="4" stroke-linejoin="round"/>
+      <g class="arm-l" style="transform-origin:128px 268px">
+        ${limb('M128 268 L68 338')}
+        <circle cx="64" cy="343" r="18" fill="${skin}" stroke="${O}" stroke-width="4"/>
+      </g>
+      <g class="arm-r" style="transform-origin:272px 268px">
+        ${limb('M272 268 L332 338')}
+        ${club}
+        <circle cx="336" cy="343" r="18" fill="${skin}" stroke="${O}" stroke-width="4"/>
+      </g>
+      <g class="head" style="transform-origin:200px 245px">
+        ${ears(earK, skin)}
+        <ellipse cx="200" cy="160" rx="95" ry="85" fill="${skin}" stroke="${O}" stroke-width="5"/>
+        ${hair(hairK, hairC)}
+        <circle cx="140" cy="200" r="13" fill="#ff8a80" opacity=".45"/><circle cx="260" cy="200" r="13" fill="#ff8a80" opacity=".45"/>
+        ${eyes(eyeK)}
+        ${nose(noseK, skin)}
+        ${mouth(mouthK)}
+        ${headAccessory(acc, eyeK)}
+      </g>
+      ${acc === 4 ? `<polygon points="200,256 164,238 164,274" fill="#e53935" stroke="${O}" stroke-width="4" stroke-linejoin="round"/>
+                     <polygon points="200,256 236,238 236,274" fill="#e53935" stroke="${O}" stroke-width="4" stroke-linejoin="round"/>
+                     <circle cx="200" cy="256" r="9" fill="#c62828" stroke="${O}" stroke-width="3"/>` : ''}
+    </g>
+  </svg>`;
+}
+
+/* ---------- Wire up every clickable thing on the home page ---------- */
+const clickables = [...document.querySelectorAll('#home a, #home button')];
+clickables.forEach((el, i) => {
+  el.addEventListener('click', e => {
+    e.preventDefault();
+    location.hash = 'troll-' + (i + 1);
+  });
+});
+document.querySelectorAll('#home form').forEach(f => f.addEventListener('submit', e => e.preventDefault()));
+
+function route(){
+  const m = location.hash.match(/^#troll-(\d+)$/);
+  if(m){
+    const n = parseInt(m[1], 10);
+    const i = n - 1;
+    document.getElementById('trollArt').innerHTML = trollSVG(i);
+    document.getElementById('trollInfo').textContent =
+      (i % 3 === 1 ? '🕺 Dancing troll' : '🧌 Troll') + ' #' + n + ' of ' + clickables.length + ' — try another link!';
+    document.body.classList.add('trolled');
+    window.scrollTo(0, 0);
+  } else {
+    document.body.classList.remove('trolled');
+  }
+}
+document.getElementById('backBtn').addEventListener('click', () => { history.pushState('', document.title, location.pathname + location.search); route(); });
+window.addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>
